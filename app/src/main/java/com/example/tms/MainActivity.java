@@ -1,26 +1,35 @@
 package com.example.tms;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Color;
+import android.media.Image;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.bumptech.glide.Glide;
 
 public class MainActivity extends AppCompatActivity {
-
+    private ImageView imgi;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        getWindow().setFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
+        imgi = findViewById(R.id.gifim);
+        Glide.with(this).load(R.drawable.aapdigif).into(imgi);
+
     }
 
-    public void OpenSignupPage(View view) {
-        startActivity(new Intent(MainActivity.this,SignupActivity.class));
-        finish();
+    public void toSignin(View v){
+        Intent intent = new Intent(MainActivity.this, SigninActivity.class);
+        startActivity(intent);
+    }
+    public void toSignup(View v){
+        Intent intent = new Intent(MainActivity.this, SignupActivity.class);
+        startActivity(intent);
     }
 }
