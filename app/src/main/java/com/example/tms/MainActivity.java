@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().hide();
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
         imgi = findViewById(R.id.gifim);
-        Glide.with(this).load(R.drawable.aapdigif).into(imgi);
+        Glide.with(this).load(R.drawable.gif_2).into(imgi);
 
     }
 
