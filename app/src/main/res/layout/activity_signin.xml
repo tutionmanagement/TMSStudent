@@ -73,7 +73,6 @@
         android:layout_width="342dp"
         android:layout_height="50dp"
         android:layout_marginTop="32dp"
-        android:backgroundTint="#346183"
         android:onClick="Signin"
         android:text="Sign In"
         app:cornerRadius="10dp"

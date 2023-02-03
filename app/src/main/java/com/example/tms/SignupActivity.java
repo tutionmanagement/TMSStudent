@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
@@ -17,10 +18,13 @@ public class SignupActivity extends AppCompatActivity {
     private String name,email,password;
     private ImageView im;
     private CheckBox cbAgree;
-    @Override
+
+    private Button signUp;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        getSupportActionBar().hide();
+
 
     }
     public void toSignin(View v){
@@ -44,7 +48,13 @@ public class SignupActivity extends AppCompatActivity {
             if(!(cbAgree.isChecked())){
                 Toast.makeText(SignupActivity.this, "Please agree our terms and condition", Toast.LENGTH_SHORT).show();
             }
+            else {
+                Intent intent = new Intent(SignupActivity.this, DashboardActivity.class);
+                startActivity(intent);
+            }
 
         }
     }
+
+
 }
