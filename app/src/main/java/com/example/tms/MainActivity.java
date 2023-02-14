@@ -12,16 +12,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.bumptech.glide.Glide;
 
 public class MainActivity extends AppCompatActivity {
-    private ImageView imgi;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
-        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN); //show the activity in full screen
-        imgi = findViewById(R.id.gifim);
-        Glide.with(this).load(R.drawable.gif_2).into(imgi);
-
     }
 
     public void toSignin(View v){
