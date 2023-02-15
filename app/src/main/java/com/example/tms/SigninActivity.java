@@ -23,6 +23,7 @@ public class SigninActivity extends AppCompatActivity {
     public void toSignup(View v){
         Intent intent = new Intent(SigninActivity.this, SignupActivity.class);
         startActivity(intent);
+        finish();
     }
 
     public void Signin(View v){
@@ -38,6 +39,9 @@ public class SigninActivity extends AppCompatActivity {
         }else {
             if(email.equals("admin@gmail.com")&&password.equals("1234")){
                 Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
+                startActivity(intent);
+                finish();
             }else {
                 Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
             }

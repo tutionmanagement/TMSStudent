@@ -19,6 +19,21 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/textView5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:onClick="toSignin"
+                android:text="Have a Account? Sign In"
+                android:textSize="18sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.71"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btn_Signup" />
+
+            <TextView
                 android:id="@+id/textView4"
                 android:layout_width="100dp"
                 android:layout_height="36dp"
@@ -45,7 +60,7 @@
                 android:drawableStart="@drawable/baseline_account_circle_24"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Name"
+                android:hint="Full Name"
                 android:inputType="textPersonName"
                 android:textColor="#573535"
                 android:textColorHint="#686666"
@@ -62,10 +77,10 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/boarder"
-                android:drawableStart="@drawable/baseline_email_24"
+                android:drawableStart="@drawable/baseline_alternate_email_24"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Email"
+                android:hint="Username"
                 android:inputType="textPersonName"
                 android:textColor="#573535"
                 android:textColorHint="#686666"
@@ -85,30 +100,38 @@
                 android:drawableStart="@drawable/baseline_lock_24"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Password"
+                android:hint="Create Password"
                 android:inputType="textPersonName"
                 android:password="true"
                 android:textColor="#573535"
                 android:textColorHint="#686666"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edEmail" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:layout_marginBottom="20dp"
-                android:onClick="toSignin"
-                android:text="Have a Account? Sign In"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <EditText
+                android:id="@+id/edAdminKey"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/boarder"
+                android:drawableStart="@drawable/baseline_key_24"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Admin Password (Provided)"
+                android:inputType="textPersonName"
+                android:password="true"
+                android:textColor="#573535"
+                android:textColorHint="#686666"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_Signup" />
+                app:layout_constraintTop_toBottomOf="@+id/edPassword" />
 
             <CheckBox
                 android:id="@+id/cbAgree"
@@ -118,12 +141,15 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:backgroundTintMode="add"
-                android:text="I agree with the Terms of Service and Privacy Policy"
-                android:textSize="14sp"
+                android:buttonTint="#4DD163"
+                android:checked="false"
+                android:text="Are You a Teacher?"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.596"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edPassword" />
+                app:layout_constraintTop_toBottomOf="@+id/edAdminKey"
+                app:useMaterialThemeColors="false" />
 
             <Button
                 android:id="@+id/btn_Signup"
@@ -134,7 +160,7 @@
                 android:layout_marginEnd="50dp"
                 android:backgroundTint="#0391FF"
                 android:onClick="Signup"
-                android:text="Sign Up"
+                android:text="Register"
                 app:cornerRadius="10dp"
                 app:icon="@drawable/baseline_login_24"
                 app:iconGravity="textEnd"
