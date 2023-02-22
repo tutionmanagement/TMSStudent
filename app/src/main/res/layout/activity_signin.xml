@@ -20,17 +20,16 @@
 
             <TextView
                 android:id="@+id/textView3"
-                android:layout_width="88dp"
+                android:layout_width="wrap_content"
                 android:layout_height="34dp"
-                android:layout_marginStart="73dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="73dp"
+                android:layout_marginStart="50dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="50dp"
                 android:clickable="false"
-                android:text="Sign In"
+                android:text="Welcome Back, Teacher"
                 android:textSize="27sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.497"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -101,6 +100,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:onClick="toSignup"
+                android:padding="7dp"
                 android:text="Don't Have Account?  Sign Up"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -121,6 +121,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/login_min" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 

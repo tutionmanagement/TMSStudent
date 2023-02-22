@@ -25,22 +25,7 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
         getSupportActionBar().hide();
-        getSupportActionBar().hide();
-        cbAgree = findViewById(R.id.cbAgree);
-        ediAdminKey = findViewById(R.id.edAdminKey);
-        ediAdminKey.setVisibility(View.GONE);
 
-        cbAgree.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(b){
-                    ediAdminKey.setVisibility(View.VISIBLE);
-                }
-                else {
-                    ediAdminKey.setVisibility(View.GONE);
-                }
-            }
-        });
     }
     public void toSignin(View v){
         Intent intent = new Intent(SignupActivity.this, SigninActivity.class);
@@ -55,24 +40,16 @@ public class SignupActivity extends AppCompatActivity {
         name = ediName.getText().toString();
         email = ediEmail.getText().toString();
         password = ediPassword.getText().toString();
-        adminKey = ediAdminKey.getText().toString();
+
 
         if(email.equals("") || password.equals("")||name.equals("")){
             ediEmail.setError("This Field Required");
             ediPassword.setError("This Field Required");
             ediName.setError("This Field Required");
         }else{
-            if(cbAgree.isChecked()){ // For Teacher
-                if(adminKey.equals(""))
-                    ediAdminKey.setError("This Field Required");
-                else{
-                    Intent intent = new Intent(SignupActivity.this, DashboardActivity.class);
-                    startActivity(intent);
-                }
-            }else { // Student
-                Intent intent = new Intent(SignupActivity.this, DashboardActivity.class);
-                startActivity(intent);
-            }
+            Intent intent = new Intent(SignupActivity.this, DashboardActivity.class);
+            startActivity(intent);
+
         }
     }
 

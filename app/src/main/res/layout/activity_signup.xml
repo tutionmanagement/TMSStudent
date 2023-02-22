@@ -25,23 +25,25 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="20dp"
                 android:onClick="toSignin"
+                android:padding="7dp"
                 android:text="Have a Account? Sign In"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.71"
+                app:layout_constraintHorizontal_bias="0.753"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_Signup" />
+                app:layout_constraintTop_toBottomOf="@+id/btn_Signup"
+                app:layout_constraintVertical_bias="1.0" />
 
             <TextView
                 android:id="@+id/textView4"
-                android:layout_width="100dp"
+                android:layout_width="wrap_content"
                 android:layout_height="36dp"
-                android:layout_marginStart="70dp"
+                android:layout_marginStart="50dp"
                 android:layout_marginTop="30dp"
-                android:layout_marginEnd="70dp"
+                android:layout_marginEnd="50dp"
                 android:clickable="false"
-                android:text="Sign Up"
+                android:text="Welcome, Teacher"
                 android:textSize="27sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -49,12 +51,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edName"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="25dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/boarder"
                 android:drawableStart="@drawable/baseline_account_circle_24"
@@ -69,7 +71,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edEmail"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
@@ -80,7 +82,7 @@
                 android:drawableStart="@drawable/baseline_alternate_email_24"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Username"
+                android:hint="Email"
                 android:inputType="textPersonName"
                 android:textColor="#573535"
                 android:textColorHint="#686666"
@@ -89,7 +91,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edName" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edPassword"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
@@ -111,52 +113,12 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edEmail" />
 
-            <EditText
-                android:id="@+id/edAdminKey"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="30dp"
-                android:layout_marginEnd="30dp"
-                android:background="@drawable/boarder"
-                android:drawableStart="@drawable/baseline_key_24"
-                android:drawablePadding="10dp"
-                android:ems="10"
-                android:hint="Admin Password (Provided)"
-                android:inputType="textPersonName"
-                android:password="true"
-                android:textColor="#573535"
-                android:textColorHint="#686666"
-                android:visibility="visible"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edPassword" />
-
-            <CheckBox
-                android:id="@+id/cbAgree"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="30dp"
-                android:backgroundTintMode="add"
-                android:buttonTint="#4DD163"
-                android:checked="false"
-                android:text="Are You a Teacher?"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.596"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edAdminKey"
-                app:useMaterialThemeColors="false" />
-
             <Button
                 android:id="@+id/btn_Signup"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_marginStart="50dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="50dp"
                 android:backgroundTint="#0391FF"
                 android:onClick="Signup"
@@ -167,12 +129,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.492"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cbAgree" />
+                app:layout_constraintTop_toBottomOf="@+id/spSub" />
 
             <ImageView
                 android:id="@+id/imageView3"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
+                android:layout_width="350dp"
+                android:layout_height="350dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="70dp"
                 android:layout_marginEnd="20dp"
@@ -180,6 +142,31 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@mipmap/register" />
+
+            <Spinner
+                android:id="@+id/spStd"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/boarder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edPassword" />
+
+            <Spinner
+                android:id="@+id/spSub"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/boarder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spStd" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
