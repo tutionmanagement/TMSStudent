@@ -26,7 +26,7 @@
                 android:layout_marginTop="44dp"
                 android:layout_marginEnd="50dp"
                 android:clickable="false"
-                android:text="Sign In"
+                android:text="Sign In, Student"
                 android:textSize="27sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
