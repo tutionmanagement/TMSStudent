@@ -20,6 +20,7 @@ public class DashboardActivity extends AppCompatActivity {
         binding=ActivityDashboardBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         replaceFragment(new HomeFragment());
+        getSupportActionBar().hide();
 
         binding.bottomNavigationView.setOnItemSelectedListener(item -> {
 
