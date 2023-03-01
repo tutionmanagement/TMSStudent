@@ -28,16 +28,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cd2">
-
-                <ImageView
-                    android:id="@+id/imageView7"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.2"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/img3medium" />
-            </androidx.cardview.widget.CardView>
+                app:layout_constraintTop_toBottomOf="@+id/cd2"/>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cd2"
@@ -52,12 +43,12 @@
                 app:layout_constraintTop_toBottomOf="@+id/cd1">
 
                 <ImageView
-                    android:id="@+id/imageView6"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/imageView4"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
                     android:alpha="0.2"
-                    android:scaleType="fitXY"
-                    android:src="@mipmap/img2medium" />
+                    android:scaleType="centerCrop"
+                    android:src="@mipmap/imgcard" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -78,16 +69,10 @@
                     android:id="@+id/imageView5"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:alpha="0.3"
-                    android:scaleType="fitXY"
+                    android:alpha="0.2"
+                    android:scaleType="centerCrop"
                     android:src="@mipmap/imgmedium" />
 
-                <ImageButton
-                    android:id="@+id/imageButton"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
-                    android:backgroundTint="#9AF6F5F5"
-                    android:src="@drawable/baseline_announcement_24" />
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
