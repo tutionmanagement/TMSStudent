@@ -1,5 +1,6 @@
 package com.example.tms;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -20,6 +21,12 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.tms.databinding.ActivitySignupBinding;
+//import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,14 +42,24 @@ public class SignupActivity extends AppCompatActivity {
     boolean[] selectedSub;
     String[] subArray = {"Gujarati", "English", "Maths", "Science", "Social Science", "Hindi", "Environment","Sanskrit","Computer"};
 
+    private FirebaseAuth mAuth;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            currentUser.reload();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
-
+        mAuth = FirebaseAuth.getInstance();
 
         selectedSub = new boolean[subArray.length];
 
@@ -172,9 +189,22 @@ public class SignupActivity extends AppCompatActivity {
             binding.edPassword.setError("This Field Required");
             binding.edName.setError("This Field Required");
         }else{
-            Intent intent = new Intent(SignupActivity.this, DashboardActivity.class);
-            startActivity(intent);
-
+            mAuth.createUserWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                // Sign in success, update UI with the signed-in user's information
+                                Intent intent = new Intent(SignupActivity.this, DashboardActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(SignupActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
     }
 

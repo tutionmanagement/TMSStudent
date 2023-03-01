@@ -1,5 +1,6 @@
 package com.example.tms;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -9,15 +10,35 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class SigninActivity extends AppCompatActivity {
 
     private EditText ediEmail,ediPassword;
     private String email,password;
+
+    private FirebaseAuth mAuth;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if(currentUser != null){
+            currentUser.reload();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         getSupportActionBar().hide();
+
+        mAuth = FirebaseAuth.getInstance();
 
     }
     public void toSignup(View v){
@@ -37,14 +58,21 @@ public class SigninActivity extends AppCompatActivity {
             ediEmail.setError("This Field Required");
             ediPassword.setError("This Field Required");
         }else {
-            if(email.equals("admin@gmail.com")&&password.equals("1234")){
-                Toast.makeText(this, "Login Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
-                startActivity(intent);
-                finish();
-            }else {
-                Toast.makeText(this, "Login Failed", Toast.LENGTH_SHORT).show();
-            }
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            if (task.isSuccessful()) {
+                                Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
+                                startActivity(intent);
+                                finish();
+                            } else {
+                                // If sign in fails, display a message to the user.
+                                Toast.makeText(SigninActivity.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         }
     }
 }
