@@ -3,21 +3,15 @@ package com.example.tms;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.view.WindowManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.tms.databinding.ActivitySignupBinding;
@@ -27,22 +21,32 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
-
 public class SignupActivity extends AppCompatActivity {
 
-    private String name,email,password,adminKey;
+    private String name,email,password,tcname;
 
     private ActivitySignupBinding binding;
     private String[] std = {"Select Standard", "1","2","3","4","5","6","7","8","9","10"};
+
+    private String[] tclasses = {"Select Tution Classes","ABC","DEF","GHI","JKL","MNO","PQR","STU","VWX","YZ"};
 
     ArrayList<Integer> sublist = new ArrayList<>();
     boolean[] selectedSub;
     String[] subArray = {"Gujarati", "English", "Maths", "Science", "Social Science", "Hindi", "Environment","Sanskrit","Computer"};
 
     private FirebaseAuth mAuth;
+
+    private DatabaseReference rootDatabaseref;
+
+    private int finalSelectedStd;
+
+    private String finalSelectedSub;
 
     @Override
     public void onStart() {
@@ -55,23 +59,32 @@ public class SignupActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
         mAuth = FirebaseAuth.getInstance();
-
+        rootDatabaseref = FirebaseDatabase.getInstance().getReference().child("Students");
         selectedSub = new boolean[subArray.length];
 
         ArrayAdapter<String> adapter=new ArrayAdapter<>(getApplicationContext(),
                 android.R.layout.simple_list_item_1,std);
         binding.spStd.setSelection(1);
         binding.spStd.setAdapter(adapter);
+
+        ArrayAdapter<String> adapterTc=new ArrayAdapter<>(getApplicationContext(),
+                android.R.layout.simple_list_item_1,tclasses);
+        binding.sptcName.setSelection(1);
+        binding.sptcName.setAdapter(adapterTc);
+
         binding.spStd.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if(i>0)
-                    Toast.makeText(getApplicationContext(), "Your standard is "+std[i], Toast.LENGTH_SHORT).show();
+                if(i>0) {
+                    finalSelectedStd = Integer.parseInt(std[i]);
+                    Toast.makeText(getApplicationContext(), "Your standard is " + std[i], Toast.LENGTH_SHORT).show();
+                }
 
             }
 
@@ -81,10 +94,21 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
+        binding.sptcName.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                if(i>0) {
+                    tcname = tclasses[i];
+//                    Toast.makeText(getApplicationContext(), "Your standard is " + std[i], Toast.LENGTH_SHORT).show();
+                }
 
+            }
 
-
-
+            @Override
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                Toast.makeText(getApplicationContext(), "Nothing selected..", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         binding.spSub.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,10 +118,6 @@ public class SignupActivity extends AppCompatActivity {
                 builder.setTitle("Select Std");
 
                 // set dialog non cancelable
-                builder.setCancelable(false);
-
-
-
                 builder.setMultiChoiceItems(subArray, selectedSub, new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i, boolean b) {
@@ -135,6 +155,7 @@ public class SignupActivity extends AppCompatActivity {
                         }
                         // set text on textView
                         binding.spSub.setText(stringBuilder.toString());
+                        finalSelectedSub = stringBuilder.toString();
                     }
                 });
 
@@ -163,13 +184,6 @@ public class SignupActivity extends AppCompatActivity {
                 builder.show();
             }
         });
-
-
-
-
-
-
-
     }
     public void toSignin(View v){
         Intent intent = new Intent(SignupActivity.this, SigninActivity.class);
@@ -178,22 +192,38 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     public void Signup(View v){
-
         name = binding.edName.getText().toString();
         email = binding.edEmail.getText().toString();
         password = binding.edPassword.getText().toString();
 
-
-        if(email.equals("") || password.equals("")||name.equals("")){
+        if(email.equals("") || password.equals("")||name.equals("")|| tcname.equals("")){
             binding.edEmail.setError("This Field Required");
             binding.edPassword.setError("This Field Required");
             binding.edName.setError("This Field Required");
+
         }else{
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
+                                SharedPreferences sharedPreferences = getSharedPreferences("SystemPre",MODE_PRIVATE);
+
+                                SharedPreferences.Editor editor=sharedPreferences.edit();
+                                editor.putBoolean("isLogin",true);
+                                editor.putString("email",email);
+                                editor.commit();
+
+                                String[] finalsubs = finalSelectedSub.split(", ");
+                                ArrayList<String> sublist = new ArrayList<String>(Arrays.asList(finalsubs));
+
+                                StudentModel sm = new StudentModel(tcname,name,finalSelectedStd,sublist,email);
+
+                                String ukey = rootDatabaseref.push().getKey();
+
+                                rootDatabaseref.child(ukey).setValue(sm);
+
                                 // Sign in success, update UI with the signed-in user's information
                                 Intent intent = new Intent(SignupActivity.this, DashboardActivity.class);
                                 startActivity(intent);

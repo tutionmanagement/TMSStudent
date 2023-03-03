@@ -2,8 +2,10 @@ package com.example.tms;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
@@ -34,6 +36,7 @@ public class SigninActivity extends AppCompatActivity {
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         getSupportActionBar().hide();
@@ -63,6 +66,13 @@ public class SigninActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
+
+                                SharedPreferences sharedPreferences = getSharedPreferences("SystemPre",MODE_PRIVATE);
+                                SharedPreferences.Editor editor=sharedPreferences.edit();
+                                editor.putBoolean("isLogin",true);
+                                editor.putString("email",email);
+                                editor.commit();
+
                                 Intent intent = new Intent(SigninActivity.this, DashboardActivity.class);
                                 startActivity(intent);
                                 finish();

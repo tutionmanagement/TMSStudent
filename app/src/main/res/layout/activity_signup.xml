@@ -61,7 +61,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/boarder"
                 android:drawableStart="@drawable/baseline_account_circle_24"
@@ -74,7 +74,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.491"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
+                app:layout_constraintTop_toBottomOf="@+id/sptcName" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edEmail"
@@ -84,10 +84,10 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="30dp"
                 android:background="@drawable/boarder"
-                android:drawableStart="@drawable/baseline_alternate_email_24"
+                android:drawableStart="@drawable/baseline_email_24"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="Username"
+                android:hint="ParentEmail"
                 android:inputType="textPersonName"
                 android:textColor="#573535"
                 android:textColorHint="#686666"
@@ -159,6 +159,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edPassword" />
+
+            <Spinner
+                android:id="@+id/sptcName"
+                android:layout_width="351dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/boarder"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
             <TextView
                 android:id="@+id/spSub"
