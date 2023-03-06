@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +25,7 @@ public class SigninActivity extends AppCompatActivity {
     private String email,password;
 
     private FirebaseAuth mAuth;
+    private ProgressBar progress_signin;
 
     @Override
     public void onStart() {
@@ -40,7 +42,7 @@ public class SigninActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signin);
         getSupportActionBar().hide();
-
+        progress_signin = findViewById(R.id.progress_signin);
         mAuth = FirebaseAuth.getInstance();
 
     }
@@ -66,7 +68,7 @@ public class SigninActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-
+                                progress_signin.setVisibility(View.VISIBLE);
                                 SharedPreferences sharedPreferences = getSharedPreferences("SystemPre",MODE_PRIVATE);
                                 SharedPreferences.Editor editor=sharedPreferences.edit();
                                 editor.putBoolean("isLogin",true);

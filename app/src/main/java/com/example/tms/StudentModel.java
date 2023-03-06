@@ -1,20 +1,20 @@
 package com.example.tms;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 
 public class StudentModel {
-    private String tcName;
-    private String fullName;
+    private String tcName,fullName,email,phoneNumber;
     private int standards;
     private ArrayList<String> subjects;
-    private String email;
 
-    public StudentModel(String tcName, String fullName, int standards, ArrayList<String> subjects, String email) {
+    public StudentModel(String tcName, String fullName, int standards, ArrayList<String> subjects, String email, String phoneNumber) {
         this.tcName = tcName;
         this.fullName = fullName;
         this.standards = standards;
         this.subjects = subjects;
         this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getTcName() {
@@ -33,6 +33,22 @@ public class StudentModel {
         this.fullName = fullName;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
     public int getStandards() {
         return standards;
     }
@@ -47,13 +63,5 @@ public class StudentModel {
 
     public void setSubjects(ArrayList<String> subjects) {
         this.subjects = subjects;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 }

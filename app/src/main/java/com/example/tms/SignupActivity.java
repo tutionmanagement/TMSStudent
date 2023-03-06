@@ -13,9 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
-
 import com.example.tms.databinding.ActivitySignupBinding;
-//import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -24,12 +22,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 public class SignupActivity extends AppCompatActivity {
 
-    private String name,email,password,tcname;
+    private String name,email,password,tcname,phoneNumber;
 
     private ActivitySignupBinding binding;
     private String[] std = {"Select Standard", "1","2","3","4","5","6","7","8","9","10"};
@@ -195,19 +194,23 @@ public class SignupActivity extends AppCompatActivity {
         name = binding.edName.getText().toString();
         email = binding.edEmail.getText().toString();
         password = binding.edPassword.getText().toString();
+        phoneNumber = binding.edPhoneNumber.getText().toString();
 
-        if(email.equals("") || password.equals("")||name.equals("")|| tcname.equals("")){
-            binding.edEmail.setError("This Field Required");
-            binding.edPassword.setError("This Field Required");
-            binding.edName.setError("This Field Required");
-
+        if(email.equals("") || password.equals("")||name.equals("")|| tcname.equals("") || phoneNumber.equals("")){
+            binding.edEmail.setError("* This Field is Required");
+            binding.edPassword.setError("* This Field is Required");
+            binding.edName.setError("* This Field is Required");
+            binding.edPhoneNumber.setError("* This Field is Required");
         }else{
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-                            if (task.isSuccessful()) {
+//
+//                            binding.progressSignup.setVisibility(View.VISIBLE);
 
+                            if (task.isSuccessful()) {
+                                binding.progressSignup.setVisibility(View.VISIBLE);
                                 SharedPreferences sharedPreferences = getSharedPreferences("SystemPre",MODE_PRIVATE);
 
                                 SharedPreferences.Editor editor=sharedPreferences.edit();
@@ -218,7 +221,7 @@ public class SignupActivity extends AppCompatActivity {
                                 String[] finalsubs = finalSelectedSub.split(", ");
                                 ArrayList<String> sublist = new ArrayList<String>(Arrays.asList(finalsubs));
 
-                                StudentModel sm = new StudentModel(tcname,name,finalSelectedStd,sublist,email);
+                                StudentModel sm = new StudentModel(tcname,name,finalSelectedStd,sublist,email,phoneNumber);
 
                                 String ukey = rootDatabaseref.push().getKey();
 

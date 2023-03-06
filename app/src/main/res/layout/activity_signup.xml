@@ -69,7 +69,7 @@
                 android:ems="10"
                 android:hint="Full Name"
                 android:inputType="textPersonName"
-                android:textColor="#573535"
+                android:textColor="#000000"
                 android:textColorHint="#686666"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.491"
@@ -87,14 +87,34 @@
                 android:drawableStart="@drawable/baseline_email_24"
                 android:drawablePadding="10dp"
                 android:ems="10"
-                android:hint="ParentEmail"
+                android:hint="Parent Email"
                 android:inputType="textPersonName"
-                android:textColor="#573535"
+                android:textColor="#000000"
                 android:textColorHint="#686666"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edName" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edPhoneNumber"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/boarder"
+                android:drawableStart="@drawable/baseline_local_phone_24"
+                android:drawablePadding="10dp"
+                android:ems="10"
+                android:hint="Phone Number"
+                android:inputType="phone"
+                android:textColor="#000000"
+                android:textColorHint="#686666"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edEmail" />
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edPassword"
@@ -110,13 +130,13 @@
                 android:hint="Create Password"
                 android:inputType="textPersonName"
                 android:password="true"
-                android:textColor="#573535"
+                android:textColor="#000000"
                 android:textColorHint="#686666"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.495"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edEmail" />
+                app:layout_constraintTop_toBottomOf="@+id/edPhoneNumber" />
 
             <Button
                 android:id="@+id/btn_Signup"
@@ -191,6 +211,19 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spStd" />
+
+            <ProgressBar
+                android:id="@+id/progress_signup"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:indeterminate="true"
+                android:indeterminateDrawable="@drawable/progress_btn"
+                android:visibility="gone">
+            </ProgressBar>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
