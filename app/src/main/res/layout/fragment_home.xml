@@ -24,11 +24,21 @@
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
                 android:layout_marginBottom="30dp"
+                app:cardBackgroundColor="#7B2869"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/cd2"/>
+                app:layout_constraintTop_toBottomOf="@+id/cd2" >
+
+                <TextView
+                    android:id="@+id/textView10"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello World "
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColor="#C85C8E" />
+            </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cd2"
@@ -37,18 +47,19 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="30dp"
                 android:layout_marginEnd="20dp"
+                app:cardBackgroundColor="#2E4F4F"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/cd1">
 
-                <ImageView
-                    android:id="@+id/imageView4"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.2"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/imgcard" />
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello World "
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColor="#CBE4DE" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -59,20 +70,20 @@
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="20dp"
                 android:clickable="true"
+                app:cardBackgroundColor="#242C70"
                 app:cardCornerRadius="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                app:layout_constraintTop_toTopOf="parent" >
 
-                <ImageView
-                    android:id="@+id/imageView5"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:alpha="0.2"
-                    android:scaleType="centerCrop"
-                    android:src="@mipmap/imgmedium" />
-
+                <TextView
+                    android:id="@+id/textView8"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hello World "
+                    android:textAppearance="@style/TextAppearance.AppCompat.Display2"
+                    android:textColor="#C3CAF4" />
             </androidx.cardview.widget.CardView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
