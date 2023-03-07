@@ -5,13 +5,18 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 import com.example.tms.databinding.ActivitySignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -26,6 +31,9 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class SignupActivity extends AppCompatActivity {
 
     private String name,email,password,tcname,phoneNumber;
@@ -46,6 +54,10 @@ public class SignupActivity extends AppCompatActivity {
     private int finalSelectedStd;
 
     private String finalSelectedSub;
+
+
+    private EditText txtEmail;
+    private Button btnEditEmail;
 
     @Override
     public void onStart() {
@@ -206,31 +218,82 @@ public class SignupActivity extends AppCompatActivity {
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
-//
-//                            binding.progressSignup.setVisibility(View.VISIBLE);
+
+                            binding.progressSignup.setVisibility(View.VISIBLE);
+
+                            LayoutInflater inflater= LayoutInflater.from(getApplicationContext());
+                            View view=inflater.inflate(R.layout.alert_dialog,null);
+                            AlertDialog builder = new AlertDialog.Builder(SignupActivity.this).create();
+                            builder.setCancelable(false);
+                            builder.setView(view);
+                            builder.setTitle("Email Verification");
+                            builder.setMessage("A Email has been send on below email \nYou will be redirected to Dashboard in few moments...\nNot You? Type New Email to Resend\n");
+                            txtEmail = view.findViewById(R.id.edemailforalert);
+                            btnEditEmail = view.findViewById(R.id.btneditemail);
+                            txtEmail.setEnabled(false);
+                            txtEmail.setText(email);
+                            btnEditEmail.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    txtEmail.setEnabled(true);
+                                }
+                            });
+                            builder.setButton(Dialog.BUTTON_POSITIVE, "Done", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    builder.dismiss();
+                                }
+                            });
+                            builder.show();
+
+
+                            //-------------------**************************------------------------*********************************
+
 
                             if (task.isSuccessful()) {
-                                binding.progressSignup.setVisibility(View.VISIBLE);
-                                SharedPreferences sharedPreferences = getSharedPreferences("SystemPre",MODE_PRIVATE);
 
-                                SharedPreferences.Editor editor=sharedPreferences.edit();
-                                editor.putBoolean("isLogin",true);
-                                editor.putString("email",email);
-                                editor.commit();
 
-                                String[] finalsubs = finalSelectedSub.split(", ");
-                                ArrayList<String> sublist = new ArrayList<String>(Arrays.asList(finalsubs));
+                                mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    @Override
+                                    public void onComplete(@NonNull Task<Void> task) {
+                                        if(task.isSuccessful()){
+                                            Timer timer = new Timer();
+                                            timer.schedule(new TimerTask() {
+                                                @Override
+                                                public void run() {
+                                                    mAuth.getCurrentUser().reload();
+                                                    if(mAuth.getCurrentUser().isEmailVerified()){
+                                                        timer.cancel();
+                                                        builder.dismiss();
+                                                        SharedPreferences sharedPreferences = getSharedPreferences("SystemPre",MODE_PRIVATE);
+                                                        SharedPreferences.Editor editor=sharedPreferences.edit();
+                                                        editor.putBoolean("isLogin",true);
+                                                        editor.putString("email",email);
+                                                        editor.commit();
+                                                        String[] finalsubs = finalSelectedSub.split(", ");
+                                                        ArrayList<String> sublist = new ArrayList<String>(Arrays.asList(finalsubs));
+                                                        StudentModel sm = new StudentModel(tcname,name,finalSelectedStd,sublist,email,phoneNumber);
+                                                        String ukey = rootDatabaseref.push().getKey();
+                                                        rootDatabaseref.child(ukey).setValue(sm);
+                                                        // Sign in success, update UI with the signed-in user's information
+                                                        Intent intent = new Intent(SignupActivity.this, DashboardActivity.class);
+                                                        startActivity(intent);
+                                                        finish();
+                                                    }
+                                                    else{
+                                                        Log.i("EM","Email Not Verified");
+                                                    }
+                                                }
+                                            },0,800);
 
-                                StudentModel sm = new StudentModel(tcname,name,finalSelectedStd,sublist,email,phoneNumber);
+                                        }
+                                        else{
+                                            Toast.makeText(SignupActivity.this, "Please Verify Your Email ("+email+")", Toast.LENGTH_SHORT).show();
+                                        }
+                                    }
+                                });
 
-                                String ukey = rootDatabaseref.push().getKey();
 
-                                rootDatabaseref.child(ukey).setValue(sm);
-
-                                // Sign in success, update UI with the signed-in user's information
-                                Intent intent = new Intent(SignupActivity.this, DashboardActivity.class);
-                                startActivity(intent);
-                                finish();
                             } else {
                                 // If sign in fails, display a message to the user.
                                 Toast.makeText(SignupActivity.this, "Authentication failed.",
