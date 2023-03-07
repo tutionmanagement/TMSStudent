@@ -30,7 +30,7 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/card1"
+                android:id="@+id/cvAbout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
@@ -68,11 +68,15 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/cvLogout"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="160dp"
-                android:layout_marginEnd="10dp">
+                android:layout_marginEnd="10dp"
+                android:clickable="true"
+                android:onClick="doLogout">
+
 
                 <TextView
                     android:id="@+id/txtlogout"
