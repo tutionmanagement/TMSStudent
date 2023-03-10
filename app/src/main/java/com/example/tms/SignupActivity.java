@@ -1,6 +1,7 @@
 package com.example.tms;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -17,20 +18,27 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ListAdapter;
 import android.widget.Toast;
+
 import com.example.tms.databinding.ActivitySignupBinding;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -41,8 +49,8 @@ public class SignupActivity extends AppCompatActivity {
     private ActivitySignupBinding binding;
     private String[] std = {"Select Standard", "1","2","3","4","5","6","7","8","9","10"};
 
-    private String[] tclasses = {"Select Tution Classes","ABC","DEF","GHI","JKL","MNO","PQR","STU","VWX","YZ"};
-
+//    private String[] tclasses = {"Select Tution Classes","ABC","DEF","GHI","JKL","MNO","PQR","STU","VWX","YZ"};
+    private List<String> tclasses = new ArrayList<>();
     ArrayList<Integer> sublist = new ArrayList<>();
     boolean[] selectedSub;
     String[] subArray = {"Gujarati", "English", "Maths", "Science", "Social Science", "Hindi", "Environment","Sanskrit","Computer"};
@@ -51,14 +59,14 @@ public class SignupActivity extends AppCompatActivity {
 
     private DatabaseReference rootDatabaseref;
 
+    private DatabaseReference teacherDatabaseref;
+
     private int finalSelectedStd;
 
     private String finalSelectedSub;
 
-
     private EditText txtEmail;
     private Button btnEditEmail;
-
     @Override
     public void onStart() {
         super.onStart();
@@ -75,8 +83,43 @@ public class SignupActivity extends AppCompatActivity {
         binding = ActivitySignupBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
+        tclasses.add("Select Tuition Classes");
+
         mAuth = FirebaseAuth.getInstance();
         rootDatabaseref = FirebaseDatabase.getInstance().getReference().child("Students");
+        teacherDatabaseref = FirebaseDatabase.getInstance().getReference("Teachers");
+
+        // Get TC Name from Firebase
+        teacherDatabaseref.addValueEventListener(new ValueEventListener() {
+            String tcname1;
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot dataSnapshot : snapshot.getChildren()){
+                    tcname1 = (String) dataSnapshot.child("tcName").getValue();
+                    tclasses.add(tcname1);
+                }
+//                Log.i("TcName",""+tcnames);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        // Working
+//        teacherDatabaseref.child("Teachers").get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DataSnapshot> task) {
+//                if(task.isSuccessful()){
+//                    Object s = String.valueOf(task.getResult().getValue());
+////                    Log.i("List of tcname",String.valueOf(task.getResult().getValue()));
+//                    Log.i("List of tcname",""+s);
+//                }
+//            }
+//        });
+
+//        Log.i("HELLO JUGAL","This Is Data - "+studentModels.isEmpty());
+
         selectedSub = new boolean[subArray.length];
 
         ArrayAdapter<String> adapter=new ArrayAdapter<>(getApplicationContext(),
@@ -109,7 +152,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if(i>0) {
-                    tcname = tclasses[i];
+                    tcname = tclasses.get(i);
 //                    Toast.makeText(getApplicationContext(), "Your standard is " + std[i], Toast.LENGTH_SHORT).show();
                 }
 
@@ -207,12 +250,14 @@ public class SignupActivity extends AppCompatActivity {
         email = binding.edEmail.getText().toString();
         password = binding.edPassword.getText().toString();
         phoneNumber = binding.edPhoneNumber.getText().toString();
+        tcname = binding.sptcName.getSelectedItem().toString();
 
-        if(email.equals("") || password.equals("")||name.equals("")|| tcname.equals("") || phoneNumber.equals("")){
+        if(email.equals("") || password.equals("")||name.equals("")|| tcname.equals("Select Tuition Classes") || phoneNumber.equals("")){
             binding.edEmail.setError("* This Field is Required");
             binding.edPassword.setError("* This Field is Required");
             binding.edName.setError("* This Field is Required");
             binding.edPhoneNumber.setError("* This Field is Required");
+            Toast.makeText(this, "Please Select Tuition Classes Name", Toast.LENGTH_SHORT).show();
         }else{
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {

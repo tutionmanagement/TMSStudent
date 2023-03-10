@@ -7,7 +7,7 @@ public class StudentModel {
     private String tcName,fullName,email,phoneNumber;
     private int standards;
     private ArrayList<String> subjects;
-
+public StudentModel(){}
     public StudentModel(String tcName, String fullName, int standards, ArrayList<String> subjects, String email, String phoneNumber) {
         this.tcName = tcName;
         this.fullName = fullName;
@@ -64,4 +64,18 @@ public class StudentModel {
     public void setSubjects(ArrayList<String> subjects) {
         this.subjects = subjects;
     }
+
+    @Override
+    public String toString() {
+        return "StudentModel{" +
+                "tcName='" + tcName + '\'' +
+                ", fullName='" + fullName + '\'' +
+                ", email='" + email + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", standards=" + standards +
+                ", subjects=" + subjects +
+                '}';
+    }
+
+
 }
